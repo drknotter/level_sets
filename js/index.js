@@ -145,6 +145,7 @@ function canvasKey(e) {
 }
 
 function setUp(canvas) {
+    let scale = window.devicePixelRatio || 1;
     canvas.width = WIDTH / scale;
     canvas.height = HEIGHT / scale;
 
