@@ -1,7 +1,6 @@
 var SELECTION_RADIUS = 20;
 var DT = 1e-2;
-var WIDTH = 1920;
-var HEIGHT = 1080;
+
 
 var context;
 var potentialField;
@@ -10,6 +9,7 @@ var hoveredParticle = null;
 var hoveredFieldLineInfo = null;
 var hoveredPosition = null;
 var downInfo = null;
+var resolution = 0.25;
 
 var isRetinaMode = false;
 
@@ -24,7 +24,6 @@ var luminance;
 var fieldLines;
 
 function canvasDown(e) {
-    console.log(e.target.cursor);
     if (hoveredParticle) {
         downInfo = {dx: hoveredParticle.x - e.x, dy: hoveredParticle.y - e.y};
         e.target.style.cursor = 'none';
@@ -100,26 +99,13 @@ function canvasWheel(e) {
 function canvasKey(e) {
     if (e.key == 'r') {
         let scale = window.devicePixelRatio || 1;
-        if (isRetinaMode) {
-            canvas.style.width = '';
-            canvas.style.height = '';
-            canvas.width = WIDTH / scale;
-            canvas.height = HEIGHT / scale;
-            context.scale(1, 1);
-            luminance = new Luminance(
-                context.createImageData(canvas.width, canvas.height),
-                context.createImageData(canvas.width, canvas.height));
-        } else {
-            canvas.style.width = (WIDTH / scale) + 'px';
-            canvas.style.height = (HEIGHT / scale) + 'px';
-            canvas.width = WIDTH;
-            canvas.height = HEIGHT;
-            context.scale(scale, scale);
-            luminance = new Luminance(
-                context.createImageData(canvas.width, canvas.height),
-                context.createImageData(canvas.width, canvas.height), scale);
-        }
         isRetinaMode = !isRetinaMode;
+        if (isRetinaMode) {
+            resolution = window.devicePixelRatio || 1;
+        } else {
+            resolution = 0.25;
+        }
+        canvasResize();
         draw(true, false);
     } else if (e.key == 'd') {
         if (hoveredParticle) {
@@ -144,10 +130,27 @@ function canvasKey(e) {
     }
 }
 
+function canvasResize() {
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    canvas.width = resolution * w;
+    canvas.height = resolution * h;
+    context.scale(resolution, resolution);
+
+    luminance = new Luminance(
+        context.createImageData(canvas.width, canvas.height),
+        context.createImageData(canvas.width, canvas.height), resolution);
+    fieldLines.maxLength = 3 * Math.max(w, h);
+
+    draw(true, false);
+}
+
+
 function setUp(canvas) {
-    let scale = window.devicePixelRatio || 1;
-    canvas.width = WIDTH / scale;
-    canvas.height = HEIGHT / scale;
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
 
     canvas.onmousedown = canvasDown;
     canvas.onmousemove = canvasMove;
@@ -155,11 +158,10 @@ function setUp(canvas) {
     canvas.onwheel = canvasWheel;
     canvas.onkeydown = canvasKey;
 
-    luminance = new Luminance(
-        context.createImageData(canvas.width, canvas.height),
-        context.createImageData(canvas.width, canvas.height));
-    fieldLines = new FieldLines(3 * Math.max(canvas.width, canvas.height));
     potentialField = new PotentialField(60);
+    fieldLines = new FieldLines(3 * Math.max(canvas.width, canvas.height));
+
+    canvasResize();
 }
 
 
@@ -202,5 +204,5 @@ function drawTriangulation() {
     let canvas = document.getElementById("canvas");
     context = canvas.getContext('2d');
     setUp(canvas);
-    draw(true, false);
+    window.onresize = canvasResize;
 })();
