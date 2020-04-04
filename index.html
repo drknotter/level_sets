@@ -4,13 +4,19 @@
     </head>
 
     <body style="margin: 0px; height: 100%;">
-        <canvas id="canvas" tabindex="-1"></canvas><br/>
+        <canvas id="canvas" tabindex="-1" style="position: absolute; top: 0px; left: 0px;"></canvas>
+        <div id="settings" style="position: absolute; top: 0px; left: 0px; background-color: #fff4">
+            <div><input type="range" id="resolution" name="resolution" min="0" max="4" step="1" value="1"><label for="resolution">Resolution</label></div>
+            <div><input type="number" id="levelCount" name="levelCount" min="2" max="255" step="1" value="6"><label for="levelCount">Level Count</label></div>
+            <div><input type="range" id="levelSpread" name="levelSpread" min="0.05" max="2" step="0.01" value="0.4"><label for="levelSpread">Level Spread</label></div>
+            <div><input type="range" id="particleRadius" name="particleRadius" min="1" max="256" step="1" value="64"><label for="particleRadius">Particle Radius</label></div>
+        </div>
     </body>
 
+    <script type="text/javascript" src="js/Settings.js"></script>
     <script type="text/javascript" src="js/Particle.js"></script>
     <script type="text/javascript" src="js/PotentialField.js"></script>
     <script type="text/javascript" src="js/Luminance.js"></script>
     <script type="text/javascript" src="js/FieldLines.js"></script>
-    <script type="text/javascript" src="js/delaunator.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </html>

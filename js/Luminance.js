@@ -6,7 +6,7 @@ class Luminance {
         this.levels = [];
     }
 
-    update(potentialField, levelCount = 6, levelSpread = 0.4) {
+    update(potentialField, levelCount = 6, levelSpread = 0.4, particleRadius = 60) {
         this.levels = [];
 
         let min = Number.POSITIVE_INFINITY;
@@ -14,7 +14,7 @@ class Luminance {
         for (let x = 0; x < this.steppedLuminance.width; x++) {
             for (let y = 0; y < this.steppedLuminance.height; y++) {
                 let info = potentialField.nearestInfo(x / this.scale, y / this.scale);
-                if (info.distance < potentialField.particleRadius) {
+                if (info.distance < particleRadius) {
                     continue;
                 }
                 let p = potentialField.potentialAt(x / this.scale, y / this.scale);
