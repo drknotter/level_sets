@@ -69,10 +69,10 @@ class FieldLine {
         }
     }
 
-    draw(context, isSelected = false) {
+    draw(context, fieldLineWidth = 3, fieldLineColor = "#51ceed", isSelected = false) {
         context.save();
-        context.strokeStyle = isSelected ? '#39ed8d' : '#51ceed';
-        context.lineWidth = 3;
+        context.strokeStyle = isSelected ? '#39ed8d' : ("#" + fieldLineColor);
+        context.lineWidth = fieldLineWidth;
         context.lineCap = 'round';
 
         context.beginPath();
@@ -116,9 +116,9 @@ class FieldLines {
         }
     }
 
-    draw(context) {
+    draw(context, fieldLineWidth = 3, fieldLineColor = "#51ceed") {
         for (let i = 0; i < this.fieldLines.length; i++) {
-            this.fieldLines[i].draw(context);
+            this.fieldLines[i].draw(context, fieldLineWidth, fieldLineColor);
         }
     }
 }

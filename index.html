@@ -6,13 +6,43 @@
     <body style="margin: 0px; height: 100%;">
         <canvas id="canvas" tabindex="-1" style="position: absolute; top: 0px; left: 0px;"></canvas>
         <div id="settings" style="position: absolute; top: 0px; left: 0px; background-color: #fff4">
-            <div><input type="range" id="resolution" name="resolution" min="0" max="4" step="1" value="1"><label for="resolution">Resolution</label></div>
-            <div><input type="number" id="levelCount" name="levelCount" min="2" max="255" step="1" value="6"><label for="levelCount">Level Count</label></div>
-            <div><input type="range" id="levelSpread" name="levelSpread" min="0.05" max="2" step="0.01" value="0.4"><label for="levelSpread">Level Spread</label></div>
-            <div><input type="range" id="particleRadius" name="particleRadius" min="1" max="256" step="1" value="64"><label for="particleRadius">Particle Radius</label></div>
+            <table>
+                <tr>
+                    <td>Resolution</td>
+                    <td><input type="range" id="resolution" name="resolution" min="0" max="4" step="1" value="1"></td>
+                </tr>
+                <tr>
+                    <td>Level Count</td>
+                    <td><input type="number" id="levelCount" name="levelCount" min="2" max="255" step="1" value="6"></td>
+                </tr>
+                <tr>
+                    <td>Level Spread</td>
+                    <td><input type="range" id="levelSpread" name="levelSpread" min="0.05" max="2" step="0.01" value="0.4"></td>
+                </tr>
+                <tr>
+                    <td>Particle Radius</td>
+                    <td><input type="range" id="particleRadius" name="particleRadius" min="1" max="256" step="1" value="64"></td>
+                </tr>
+                <tr>
+                    <td>Level Colors</td>
+                    <td>
+                        <input class="jscolor" id="startColor" name="startColor" value="ffffff" style="width: 5em">
+                        <input class="jscolor" id="endColor" name="endColor" value="000000" style="width: 5em">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Line Width</td>
+                    <td><input type="number" id="fieldLineWidth" name="fieldLineWidth" min="1" max="20" step="1" value="3"></td>
+                </tr>
+                <tr>
+                    <td>Line Color</td>
+                    <td><input class="jscolor" id="fieldLineColor" name="fieldLineColor" value="51ceed" style="width: 5em"></td>
+                </tr>
+            </table>
         </div>
     </body>
 
+    <script type="text/javascript" src="js/jscolor.js"></script>
     <script type="text/javascript" src="js/Settings.js"></script>
     <script type="text/javascript" src="js/Particle.js"></script>
     <script type="text/javascript" src="js/PotentialField.js"></script>

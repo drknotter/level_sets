@@ -68,6 +68,13 @@ function canvasUp(e) {
     }
 }
 
+function canvasOut(e) {
+    downInfo = null;
+    hoveredParticle = null;
+    hoveredFieldLineInfo = null;
+    draw();
+}
+
 function canvasWheel(e) {
     if (hoveredParticle) {
         hoveredParticle.charge -= 10 * e.deltaY;
@@ -121,12 +128,13 @@ function setUp(canvas) {
     canvas.onmousedown = canvasDown;
     canvas.onmousemove = canvasMove;
     canvas.onmouseup = canvasUp;
+    canvas.onmouseout = canvasOut;
     canvas.onwheel = canvasWheel;
     canvas.onkeydown = canvasKey;
 
     potentialField = new PotentialField(60);
     fieldLines = new FieldLines(3 * Math.max(canvas.width, canvas.height));
-    settings = new Settings(["resolution", "levelCount", "levelSpread", "particleRadius"]);
+    settings = new Settings(["resolution", "levelCount", "levelSpread", "particleRadius", "startColor", "endColor", "fieldLineWidth", "fieldLineColor"]);
     settings.onchange = canvasResize;
 
     canvasResize();
@@ -142,13 +150,13 @@ function draw() {
     luminance.update(potentialField, settings.levelCount, settings.levelSpread, settings.particleRadius);
 
     luminance.draw(context);
-    fieldLines.draw(context);
+    fieldLines.draw(context, settings.fieldLineWidth, settings.fieldLineColor);
 
     if (hoveredParticle && !downInfo) {
         hoveredParticle.draw(context);
     }
     if (hoveredFieldLineInfo) {
-        hoveredFieldLineInfo.fieldLine.draw(context, true);
+        hoveredFieldLineInfo.fieldLine.draw(context, settings.fieldLineWidth, settings.fieldLineColor, true);
     }
 
     context.restore();
