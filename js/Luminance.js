@@ -6,7 +6,7 @@ class Luminance {
         this.levels = [];
     }
 
-    update(potentialField, levelCount = 6, levelSpread = 0.4, particleRadius = 60) {
+    update(potentialField, levelCount = 6, levelSpread = 0.4, levelColors = null, particleRadius = 60) {
         this.levels = [];
 
         let min = Number.POSITIVE_INFINITY;
@@ -58,13 +58,48 @@ class Luminance {
                     }
                     p = adjustedP;
                 }
+                p = (p - min) / (max - min);
 
-                let l = 255 * (p - min) / (max - min);
-                l = Math.min(Math.max(l, 0), 255);
+                let r = 0, g = 0, b = 0;
+                if (levelColors) {
+                    let index = -1;
+                    for (let i = 0; i < levelColors.length; i++) {
+                        if (p <= levelColors[i].position) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    if (index == -1) {
+                        let color = levelColors[levelColors.length - 1].color;
+                        r = color.r;
+                        g = color.g;
+                        b = color.b;
+                    } else if (index == 0) {
+                        let color = levelColors[0].color;
+                        r = color.r;
+                        g = color.g;
+                        b = color.b;
+                    } else {
+                        let weight = (p - levelColors[index - 1].position) / (levelColors[index].position - levelColors[index - 1].position);
+                        r = (weight * levelColors[index].color.r + (1 - weight) * levelColors[index - 1].color.r);
+                        g = (weight * levelColors[index].color.g + (1 - weight) * levelColors[index - 1].color.g);
+                        b = (weight * levelColors[index].color.b + (1 - weight) * levelColors[index - 1].color.b);
+                    }
+                } else {
+                    let l = 255 * p;
+                    r = l;
+                    g = l; 
+                    b = l;
+                }
+
+                r = Math.min(Math.max(r, 0), 255);
+                g = Math.min(Math.max(g, 0), 255);
+                b = Math.min(Math.max(b, 0), 255);
                 let index = x + this.steppedLuminance.width * y;
-                this.steppedLuminance.data[4 * index] = l;
-                this.steppedLuminance.data[4 * index + 1] = l;
-                this.steppedLuminance.data[4 * index + 2] = l;
+                this.steppedLuminance.data[4 * index] = r;
+                this.steppedLuminance.data[4 * index + 1] = g;
+                this.steppedLuminance.data[4 * index + 2] = b;
                 this.steppedLuminance.data[4 * index + 3] = 255;
             }
         }

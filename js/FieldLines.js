@@ -71,7 +71,7 @@ class FieldLine {
 
     draw(context, fieldLineWidth = 3, fieldLineColor = "#51ceed", isSelected = false) {
         context.save();
-        context.strokeStyle = isSelected ? '#39ed8d' : ("#" + fieldLineColor);
+        context.strokeStyle = isSelected ? '#39ed8d' : fieldLineColor;
         context.lineWidth = fieldLineWidth;
         context.lineCap = 'round';
 

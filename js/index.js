@@ -134,7 +134,7 @@ function setUp(canvas) {
 
     potentialField = new PotentialField(60);
     fieldLines = new FieldLines(3 * Math.max(canvas.width, canvas.height));
-    settings = new Settings(["resolution", "levelCount", "levelSpread", "particleRadius", "startColor", "endColor", "fieldLineWidth", "fieldLineColor"]);
+    settings = new Settings(["resolution", "levelCount", "levelSpread", "particleRadius", "levelColors", "fieldLineWidth", "fieldLineColor"]);
     settings.onchange = canvasResize;
 
     canvasResize();
@@ -147,7 +147,7 @@ function draw() {
     context.scale(settings.resolution, settings.resolution);
 
     fieldLines.update(potentialField);
-    luminance.update(potentialField, settings.levelCount, settings.levelSpread, settings.particleRadius);
+    luminance.update(potentialField, settings.levelCount, settings.levelSpread, settings.levelColors, settings.particleRadius);
 
     luminance.draw(context);
     fieldLines.draw(context, settings.fieldLineWidth, settings.fieldLineColor);

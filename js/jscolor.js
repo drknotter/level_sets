@@ -1066,7 +1066,7 @@ var jsc = {
 							if (this.styleElement) {
 								this.styleElement.style.backgroundImage = this.styleElement._jscOrigStyle.backgroundImage;
 								this.styleElement.style.backgroundColor = this.styleElement._jscOrigStyle.backgroundColor;
-								this.styleElement.style.color = this.styleElement._jscOrigStyle.color;
+								// this.styleElement.style.color = this.styleElement._jscOrigStyle.color;
 							}
 							this.exportColor(jsc.leaveValue | jsc.leaveStyle);
 						}
@@ -1075,7 +1075,7 @@ var jsc = {
 						if (this.styleElement) {
 							this.styleElement.style.backgroundImage = this.styleElement._jscOrigStyle.backgroundImage;
 							this.styleElement.style.backgroundColor = this.styleElement._jscOrigStyle.backgroundColor;
-							this.styleElement.style.color = this.styleElement._jscOrigStyle.color;
+							// this.styleElement.style.color = this.styleElement._jscOrigStyle.color;
 						}
 						this.exportColor(jsc.leaveValue | jsc.leaveStyle);
 
@@ -1111,7 +1111,7 @@ var jsc = {
 
 					this.styleElement.style.backgroundImage = 'none';
 					this.styleElement.style.backgroundColor = bgColor;
-					this.styleElement.style.color = fgColor;
+					// this.styleElement.style.color = fgColor;
 
 					if (this.overwriteImportant) {
 						this.styleElement.setAttribute('style',
